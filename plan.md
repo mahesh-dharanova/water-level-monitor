@@ -14,11 +14,11 @@ Roadmap broken into chunks. Edit only on a real scope decision.
 
 1. [x] Scaffold — repo structure, docs, stub modules, git init.
    Verified: `scripts/compile.sh` succeeds on the empty orchestrator.
-2. [ ] Sensor + debounce modules — wire the XKC-Y25-PNP (brown→5V, blue→GND, yellow→D2,
-   black floating), implement `sensor.cpp` (digitalRead) and `debounce.cpp` (time-based
-   stabilization). First real contact with the sensor: observe its OUT behavior dry vs.
-   liquid-present, confirm the MODE pin's actual NO/NC behavior (don't assume from a
-   listing), confirm the unit's printed supply-voltage rating.
+2. [x] Sensor + debounce modules — wired the XKC-Y25-PNP (brown→5V, blue→GND, yellow→D2,
+   black floating), `sensor.cpp` (digitalRead) and `debounce.cpp` (time-based
+   stabilization) real and hardware-verified: clean dry baseline, confirmed LOW→HIGH on
+   real water contact, MODE pin's NO behavior confirmed (floating = NO, no inversion
+   needed).
    Verified: `tests/run_tests.sh` covers debounce edge cases; upload + monitor, a
    dry/liquid-present session logged in `docs/TEST_LOG.md`.
 3. [ ] Health module — chatter-rate / stuck-too-long / warm-up checks, independent of the

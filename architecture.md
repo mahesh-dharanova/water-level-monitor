@@ -62,15 +62,18 @@ calibrate and nothing that needs to survive a reset in v1.
 | WiFi dashboard shipped in v1, not deferred | User's explicit choice this session, same v1-scope decision `tds-monitor` made over a serial-only phase | 2026-10-17 |
 | Board: Arduino Uno R4 WiFi, FQBN `arduino:renesas_uno:unor4wifi` | User's hardware, consistent with `tds-monitor` and `turbidity-monitor` | 2026-10-17 |
 
-## Open hardware questions (resolve during Chunk 2, don't assume)
+## Open hardware questions
 
-- Whether the physical unit's MODE pin actually behaves as floating=NO / grounded=NC — wiring
-  research this session found vendor listings for this sensor family disagree with each
-  other, so this gets confirmed by direct observation, not trusted from a listing.
-- The physical unit's exact rated supply voltage, read off its printed label — confirms the
-  5V-powering decision above is safe for this specific unit before it's left running
-  unattended.
-- How long the debounce window (`DEBOUNCE_MS`) actually needs to be — set from observed
-  chatter behavior at the threshold, not picked arbitrarily.
+Resolved in Chunk 2 (see `docs/TEST_LOG.md`'s 2026-10-17 entry): the physical unit's MODE
+pin, left floating, behaves as NO (OUT LOW at rest, HIGH on liquid detection) — confirmed by
+a real dry/wet hardware session, cross-checked against the sensor's own onboard LED.
+
+Still open:
+
+- The physical unit's exact rated supply voltage, read off its printed label — the 5V
+  powering decision above is working correctly so far, but the label itself hasn't been
+  read yet.
+- How long the debounce window (`DEBOUNCE_MS`) actually needs to be under worst-case
+  chatter — Chunk 2 only observed clean single-edge transitions, not threshold-edge bounce.
 - Whether the sensor needs a settling/warm-up delay after power-on (affects
-  `HEALTH_WARMUP_MS` in `config.h`).
+  `HEALTH_WARMUP_MS` in `config.h`) — relevant to Chunk 3's health module.
